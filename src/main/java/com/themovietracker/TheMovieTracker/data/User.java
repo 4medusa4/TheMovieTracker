@@ -3,20 +3,23 @@ package com.themovietracker.TheMovieTracker.data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "user")
+@Document(collection = "User")
 public class User {
+
     @Id
-    private String id;
+    private String user_id;
     private String firstname;
     private String lastname;
     private String email;
+    private String password;
 
-    public String getId() {
-        return id;
+
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getFirstname() {
@@ -51,5 +54,5 @@ public class User {
         this.password = password;
     }
 
-    private String password;
+
 }
