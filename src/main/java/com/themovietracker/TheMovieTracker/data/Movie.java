@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import java.time.LocalDate;
-@Document(collection = "movies")
+@Document(collection = "Movie")
 public class Movie {
 
     @Id
