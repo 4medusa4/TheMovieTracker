@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,10 +19,5 @@ public class MovieController {
     @GetMapping(path = "/api/v1/movies", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovies")
     public ResponseEntity<List<Movie>> getMovies() {
         return new ResponseEntity<>(this.movieService.getMovies(), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/api/v1/movie", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovieById", params = "id")
-    public ResponseEntity<Movie> getMovie(@RequestParam int id) {
-        return new ResponseEntity<>(this.movieService.getMovieById(id).stream().iterator().next(), HttpStatus.OK);
     }
 }
