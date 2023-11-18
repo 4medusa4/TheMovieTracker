@@ -58,5 +58,4 @@ public class Movie {
 
     @Column(name = "vote_count")
     private int voteCount;
-
 }
