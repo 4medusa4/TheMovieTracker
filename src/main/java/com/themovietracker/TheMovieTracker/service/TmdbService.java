@@ -1,6 +1,7 @@
 package com.themovietracker.TheMovieTracker.service;
 
 import com.themovietracker.TheMovieTracker.config.TmdbConfiguration;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +24,7 @@ public class TmdbService {
         return restTemplate.getForObject(url, String.class);
     }
 
-    public String getMovies(int pageNo, String language) {
+    public String getMovies(int pageNo, @NotNull String language) {
         String url = tmdbConfiguration.getBaseUrl()
                 + "/discover/movie/?api_key=" + tmdbConfiguration.getKey()
                 + "certification_country=" + language.split("-")[1]
