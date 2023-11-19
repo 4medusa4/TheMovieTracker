@@ -36,4 +36,9 @@ public class MovieController {
         return new ResponseEntity<>(this.tmdbService.getCountries(language), HttpStatus.OK);
     }
 
+    @GetMapping(path = "api/v1/tmdb/movie/{id}/recommend", produces = MediaType.APPLICATION_JSON_VALUE, name = "getRecommendedMovies")
+    public ResponseEntity<String> getRecommendedMovies(@PathVariable(name = "id") long id) {
+        return new ResponseEntity<>(this.tmdbService.getRecommendedMovies(id), HttpStatus.OK);
+    }
+
 }

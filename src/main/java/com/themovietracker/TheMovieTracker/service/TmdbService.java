@@ -53,4 +53,9 @@ public class TmdbService {
     }
 
 
+    public String getRecommendedMovies(long id) {
+        String url = tmdbConfiguration.getBaseUrl()
+                + "/movie/" + id + "/lists?api_key=" + tmdbConfiguration.getKey();
+        return restTemplate.getForObject(url, String.class);
+    }
 }
