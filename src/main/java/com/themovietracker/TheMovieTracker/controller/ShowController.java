@@ -2,7 +2,6 @@ package com.themovietracker.TheMovieTracker.controller;
 
 import com.sun.istack.NotNull;
 import com.themovietracker.TheMovieTracker.data.Show;
-import com.themovietracker.TheMovieTracker.repository.ShowRepository;
 import com.themovietracker.TheMovieTracker.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
-import java.util.Arrays;
 import java.util.List;
+
 @RestController
 public class ShowController {
     @Autowired
