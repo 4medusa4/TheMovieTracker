@@ -14,27 +14,27 @@ public class TheaterController {
     private TheaterService theaterService;
 
     @GetMapping(path = "/theaters")
-    public List<Theater> getAllTheaters(){
+    public List<Theater> getAllTheaters() {
         return theaterService.getAllTheaters();
     }
 
     @GetMapping(path = "/theaters/{id}")
-    public Theater getTheaterByID(@PathVariable String id){
+    public Theater getTheaterByID(@PathVariable String id) {
         return theaterService.getTheaterByID(id);
     }
 
-    @PostMapping(path="/theaters")
-    public Theater createTheater(@RequestBody Theater theater){
+    @PostMapping(path = "/theaters")
+    public Theater createTheater(@RequestBody Theater theater) {
         return theaterService.createTheater(theater);
     }
 
-    @PutMapping(path="/theaters/{id}")
-    public Theater updateTheater(@RequestBody Theater theater){
+    @PutMapping(path = "/theaters/{id}")
+    public Theater updateTheater(@RequestBody Theater theater) {
         return theaterService.updateTheater(theater);
     }
 
-    @DeleteMapping(path="theaters/{id}")
-    public void deleteTheater(@PathVariable String id){
+    @DeleteMapping(path = "theaters/{id}")
+    public void deleteTheater(@PathVariable String id) {
         theaterService.deleteTheater(id);
     }
 }

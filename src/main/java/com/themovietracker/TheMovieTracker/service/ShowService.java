@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ShowService {
@@ -44,9 +47,9 @@ public class ShowService {
         return this.showRepository.save(show).getId();
     }
 
-    public List<Show> saveShows(@NotNull List<Show> shows) {
+    public List<Show> saveShows(@NotNull @org.jetbrains.annotations.NotNull List<Show> shows) {
         List<Show> duplicates = new ArrayList<>();
-        for(var show : shows) {
+        for (var show : shows) {
             if (shows.stream().filter(s -> s.getStartTime().equals(show.getStartTime())).toList().size() > 1)
                 duplicates.add(show);
         }
@@ -74,7 +77,7 @@ public class ShowService {
         throw new IllegalArgumentException("Show with given emails are found.");
     }
 
-    public int updateShow(@NotNull Show show) {
+    public int updateShow(@NotNull @org.jetbrains.annotations.NotNull Show show) {
         Optional<Show> toBeUpdate = this.showRepository.getShowById(show.getId());
         if (toBeUpdate.isPresent()
                 && !toBeUpdate.get().equals(show)) {

@@ -13,15 +13,17 @@ public class TheaterService {
     @Autowired
     private TheaterRepository theaterRepository;
 
-    public List<Theater> getAllTheaters(){
-        List<Theater> theaters=theaterRepository.findAll();
+    public List<Theater> getAllTheaters() {
+        List<Theater> theaters = theaterRepository.findAll();
         return theaters;
     }
-    public Theater getTheaterByID(String theaterId){
-        Optional<Theater> theater=theaterRepository.findById(theaterId);
+
+    public Theater getTheaterByID(String theaterId) {
+        Optional<Theater> theater = theaterRepository.findById(theaterId);
         return theater.get();
     }
-    public Theater createTheater(Theater theater){
+
+    public Theater createTheater(Theater theater) {
         return theaterRepository.save(theater);
     }
 
