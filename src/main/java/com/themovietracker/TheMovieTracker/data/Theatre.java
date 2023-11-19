@@ -3,8 +3,8 @@ package com.themovietracker.TheMovieTracker.data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Theater")
-public class Theater {
+@Document(collection = "Theatre")
+public class Theatre {
 
     @Id
     private String theater_id;
