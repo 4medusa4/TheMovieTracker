@@ -58,4 +58,16 @@ public class TmdbService {
                 + "/movie/" + id + "/lists?api_key=" + tmdbConfiguration.getKey();
         return restTemplate.getForObject(url, String.class);
     }
+
+    public String getNewTmdbToken() {
+        String url = tmdbConfiguration.getBaseUrl()
+                + "/authentication/token/new?api_key=" + tmdbConfiguration.getKey();
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public String createSession(String requestToken) {
+        String url = tmdbConfiguration.getBaseUrl()
+                + "/authentication/session/new?api_key=" + tmdbConfiguration.getKey();
+        return restTemplate.getForObject(url, String.class, requestToken);
+    }
 }
