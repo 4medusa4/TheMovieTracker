@@ -35,4 +35,7 @@ public class TheatreService {
         theatreRepository.deleteById(id);
     }
 
+    public Optional<Theatre> getTheatreById(String theatreId) {
+        return null;
+    }
 }

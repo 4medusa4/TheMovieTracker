@@ -2,9 +2,12 @@ package com.themovietracker.TheMovieTracker.service;
 
 import com.themovietracker.TheMovieTracker.data.Movie;
 import com.themovietracker.TheMovieTracker.repository.MovieRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +27,18 @@ public class MovieService {
             throw new IllegalArgumentException("Movie not found.");
         }
         return optMovie;
+    }
+
+    public void updateTrackListStatus(){
+        List<Movie> movies = getMovies();
+        LocalDate today = LocalDate.now();
+
+        for (Movie movie : movies){
+            LocalDate releaseDate = LocalDate.parse(movie.getReleaseDate());
+            if(releaseDate !=  null && releaseDate.minusDays(3).equals(today)){
+                movie.setStatus(true);
+                movieRepository.save(movie);
+            }
+        }
     }
 }
