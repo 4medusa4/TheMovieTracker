@@ -1,9 +1,9 @@
 package com.themovietracker.TheMovieTracker.tmdb;
 
-import com.themovietracker.TheMovieTracker.config.TmdbConfiguration;
 import com.themovietracker.TheMovieTracker.data.MovieParams;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,17 +11,24 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class TmdbService {
 
-    private final TmdbConfiguration tmdbConfiguration;
+    @Value(value = "${application.api.tmdb.base_url}")
+    private String baseUrl;
+
+    @Value(value = "${application.api.tmdb.key}")
+    private String apiKey;
+
+    @Value(value = "${application.api.tmdb.image.base_url}")
+    private String baseUrlForImages;
+
     private final RestTemplate restTemplate;
-    private String
 
     public String getMovie(long movieId) {
-        String url = tmdbConfiguration.getBaseUrl() + "/movie/" + movieId + "?api_key=" + tmdbConfiguration.getKey();
+        String url = baseUrl + "/movie/" + movieId + "?api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class);
     }
 
     public String getMovies(@NotNull MovieParams movieParams) {
-        String url = tmdbConfiguration.getBaseUrl() + "/discover/movie?api_key=" + tmdbConfiguration.getKey()
+        String url = baseUrl + "/discover/movie?api_key=" + apiKey
                 + "&certification_country=" + movieParams.getCertificationCountry()
                 + "&page=" + movieParams.getPage() + "&show_me=" + movieParams.getShowMe()
                 + "&sort_by=" + movieParams.getSortBy().name().toLowerCase() + ".desc"
@@ -32,37 +39,37 @@ public class TmdbService {
     }
 
     public String getLanguages() {
-        String url = tmdbConfiguration.getBaseUrl()
-                + "/configuration/languages?api_key=" + tmdbConfiguration.getKey();
+        String url = baseUrl
+                + "/configuration/languages?api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class);
     }
 
     public String getCountries(String language) {
-        String url = tmdbConfiguration.getBaseUrl()
-                + "/configuration/countries?language=" + language + "&api_key=" + tmdbConfiguration.getKey();
+        String url = baseUrl
+                + "/configuration/countries?language=" + language + "&api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class);
     }
 
     public String getImageUrl(String imageName) {
-        return tmdbConfiguration.getBaseUrlForImage() + "/" + imageName + ".png";
+        return baseUrlForImages + "/" + imageName + ".png";
     }
 
 
     public String getRecommendedMovies(long id) {
-        String url = tmdbConfiguration.getBaseUrl()
-                + "/movie/" + id + "/lists?api_key=" + tmdbConfiguration.getKey();
+        String url = baseUrl
+                + "/movie/" + id + "/lists?api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class);
     }
 
     public String getNewTmdbToken() {
-        String url = tmdbConfiguration.getBaseUrl()
-                + "/authentication/token/new?api_key=" + tmdbConfiguration.getKey();
+        String url = baseUrl
+                + "/authentication/token/new?api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class);
     }
 
     public String createSession(String requestToken) {
-        String url = tmdbConfiguration.getBaseUrl()
-                + "/authentication/session/new?api_key=" + tmdbConfiguration.getKey();
+        String url = baseUrl
+                + "/authentication/session/new?api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class, requestToken);
     }
 }

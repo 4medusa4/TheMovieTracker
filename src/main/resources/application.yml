@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      url: mongodb+srv://root:root@movietracker.2b4p3wn.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb+srv://root:root@movietracker.2b4p3wn.mongodb.net/?retryWrites=true&w=majority
       database: MovieTracker
   mail:
     host: smtp.gmail.com
