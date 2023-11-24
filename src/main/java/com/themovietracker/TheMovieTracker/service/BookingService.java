@@ -5,6 +5,7 @@ import com.themovietracker.TheMovieTracker.data.Movie;
 import com.themovietracker.TheMovieTracker.data.Theatre;
 import com.themovietracker.TheMovieTracker.data.User;
 import com.themovietracker.TheMovieTracker.repository.BookingRepository;
+import com.themovietracker.TheMovieTracker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

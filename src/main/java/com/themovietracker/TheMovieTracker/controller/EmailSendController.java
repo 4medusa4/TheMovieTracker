@@ -1,7 +1,6 @@
 package com.themovietracker.TheMovieTracker.controller;
 
 import com.themovietracker.TheMovieTracker.service.EmailService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,12 +14,13 @@ public class EmailSendController {
     private final EmailService emailService;
 
     public EmailSendController(EmailService emailService) {
+
         this.emailService = emailService;
     }
 
     @PostMapping("/send")
-    public ResponseEntity sendMail(@RequestParam(value = "file", required = false)MultipartFile[] file, String to, String[] cc, String subject, String body){
-        this.emailService.sendMail(file, to, cc, subject, body);
-        return ResponseEntity.ok("Success");
+    public String sendMail(@RequestParam(value = "file", required = false) MultipartFile[] file, String to, String[] cc, String subject, String body) {
+        return emailService.sendMail(file, to, cc, subject, body);
     }
+
 }
