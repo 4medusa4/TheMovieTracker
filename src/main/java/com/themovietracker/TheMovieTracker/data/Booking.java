@@ -1,19 +1,37 @@
 package com.themovietracker.TheMovieTracker.data;
 
+import com.mongodb.internal.connection.Time;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
+import java.util.List;
 
-@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Document(collection = "Booking")
 public class Booking {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String movieName;
-    private String userName;
+    private LocalDate bookingDate;
+    private Time showTime;
+    private int numberOfSeats;
+    private int numberOfFullSeats;
+    private int numberOfHalfSeats;
+    private long totalAmount;
+    private boolean isPaid;
+
+
     public int getId() {
         return id;
     }
@@ -22,22 +40,66 @@ public class Booking {
         this.id = id;
     }
 
-    public String getMovieName() {
-        return movieName;
+    public LocalDate getBookingDate() {
+        return bookingDate;
     }
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
+    public void setBookingDate(LocalDate bookingDate) {
+        this.bookingDate = bookingDate;
     }
 
-    public String getUserName() {
-        return userName;
+    public Time getShowTime() {
+        return showTime;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setShowTime(Time showTime) {
+        this.showTime = showTime;
     }
 
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
 
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
 
+    public int getNumberOfFullSeats() {
+        return numberOfFullSeats;
+    }
+
+    public void setNumberOfFullSeats(int numberOfFullSeats) {
+        this.numberOfFullSeats = numberOfFullSeats;
+    }
+
+    public int getNumberOfHalfSeats() {
+        return numberOfHalfSeats;
+    }
+
+    public void setNumberOfHalfSeats(int numberOfHalfSeats) {
+        this.numberOfHalfSeats = numberOfHalfSeats;
+    }
+
+    public long getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(long totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
+    @DocumentReference
+    private List<Movie> movieIds;
+    @DocumentReference
+    private List<Theatre> theatreIds;
+    @DocumentReference
+    private List<User> userIds;
 }

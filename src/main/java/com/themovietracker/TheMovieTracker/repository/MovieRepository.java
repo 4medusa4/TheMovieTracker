@@ -1,10 +1,12 @@
 package com.themovietracker.TheMovieTracker.repository;
 
 import com.themovietracker.TheMovieTracker.data.Movie;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
-public interface MovieRepository extends MongoRepository<Movie, String> {
+@Repository
+public interface MovieRepository extends MongoRepository<Movie, ObjectId> {
     Optional<Movie> getMovieById(int id);
 }

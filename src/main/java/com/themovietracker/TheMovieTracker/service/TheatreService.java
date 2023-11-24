@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class TheatreService {
+
     @Autowired
     private TheatreRepository theatreRepository;
 
@@ -35,4 +36,18 @@ public class TheatreService {
         theatreRepository.deleteById(id);
     }
 
+    public Optional<Theatre> getTheatreById(String theatreId) {
+        return null;
+    }
+
+    public void bookSeats(Theatre theatre, int numberOfSeats) {
+        int availableSeats = theatre.getAvailableSeats();
+        if (availableSeats >= numberOfSeats) {
+            theatre.setAvailableSeats(availableSeats - numberOfSeats);
+            theatreRepository.save(theatre);
+        } else {
+            // Handle the case where there are not enough available seats
+            throw new IllegalArgumentException("Not enough available seats in the theatre.");
+        }
+    }
 }

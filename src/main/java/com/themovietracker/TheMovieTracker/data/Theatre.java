@@ -2,6 +2,9 @@ package com.themovietracker.TheMovieTracker.data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+import java.util.List;
 
 @Document(collection = "Theatre")
 public class Theatre {
@@ -46,4 +49,20 @@ public class Theatre {
     public void setNo_of_seats(int no_of_seats) {
         this.no_of_seats = no_of_seats;
     }
+
+    private int totalSeats;
+    private int bookedSeats;
+
+    private int availableSeats;
+
+    public int getAvailableSeats() {
+        return totalSeats - bookedSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    @DocumentReference
+    private List<Booking> bookingIds;
 }
