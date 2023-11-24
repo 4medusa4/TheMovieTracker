@@ -19,9 +19,9 @@ import java.util.Date;
 
 @Service
 public class AuthService {
-    @Value("${application.jwt.secret}")
+    @Value("${application.security.jwt.secret-key}")
     private String SECRET_KEY;
-    @Value("${application.jwt.expire}")
+    @Value("${application.security.jwt.expiration}")
     private long EXPIRATION_TIME;
 
     @Contract(" -> new")

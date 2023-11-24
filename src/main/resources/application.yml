@@ -1,0 +1,35 @@
+spring:
+  data:
+    mongodb:
+      url: mongodb+srv://root:root@movietracker.2b4p3wn.mongodb.net/?retryWrites=true&w=majority
+      database: MovieTracker
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: imeshananayakkara007@gmail.com
+    password: gnsecneuesavobne
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8080
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # 1 day
+      refresh-token:
+        expiration: 604800000 # 7 days
+  api:
+    tmdb:
+      base_url: https://api.themoviedb.org/3
+      key: db2559d0b93625624f1047761dfe400b
+      image:
+        base_url: https://image.tmdb.org/t/p/original
+
+debug: false
