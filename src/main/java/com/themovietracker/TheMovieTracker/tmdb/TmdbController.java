@@ -1,7 +1,6 @@
-package com.themovietracker.TheMovieTracker.controller;
+package com.themovietracker.TheMovieTracker.tmdb;
 
 import com.themovietracker.TheMovieTracker.data.MovieParams;
-import com.themovietracker.TheMovieTracker.tmdb.TmdbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,12 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/v1/movies")
+@RequestMapping("/api/v1/tmdb")
 @RequiredArgsConstructor
-public class MovieController {
+public class TmdbController {
     private final TmdbService tmdbService;
 
-    @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovies")
+    @PostMapping(path = "/movies", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovies")
     public ResponseEntity<String> getMovies(@RequestBody MovieParams movieParams) {
         return new ResponseEntity<>(this.tmdbService.getMovies(movieParams), HttpStatus.OK);
     }
@@ -25,7 +24,7 @@ public class MovieController {
         return new ResponseEntity<>(this.tmdbService.getMovie(id), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/movie/languages", produces = MediaType.APPLICATION_JSON_VALUE, name = "getLanguages")
+    @GetMapping(path = "/languages", produces = MediaType.APPLICATION_JSON_VALUE, name = "getLanguages")
     public ResponseEntity<String> getLanguagesTMDB() {
         return new ResponseEntity<>(this.tmdbService.getLanguages(), HttpStatus.OK);
     }
@@ -44,5 +43,4 @@ public class MovieController {
     public ResponseEntity<String> getNewTmdbToken() {
         return new ResponseEntity<>(this.tmdbService.getNewTmdbToken(), HttpStatus.OK);
     }
-
 }
