@@ -20,12 +20,9 @@ public class MovieController {
     private AuthService authService;
 
     @PostMapping(path = "/api/v1/tmdb/movies", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovies")
-    public ResponseEntity<String> getMovies(@RequestHeader(name = "token_key") String token, @RequestBody MovieParams movieParams) {
-        if (authService.validateToken(token)) {
-            return new ResponseEntity<>(this.tmdbService.getMovies(movieParams), HttpStatus.OK);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<String> getMovies(@RequestBody MovieParams movieParams) {
+        return new ResponseEntity<>(this.tmdbService.getMovies(movieParams), HttpStatus.OK);
+
     }
 
     @GetMapping(path = "api/v1/tmdb/movie/{id}", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovieTmdb")

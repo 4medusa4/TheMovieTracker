@@ -1,13 +1,12 @@
 package com.themovietracker.TheMovieTracker.service;
 
 import com.themovietracker.TheMovieTracker.data.Movie;
+import com.themovietracker.TheMovieTracker.data.Theatre;
 import com.themovietracker.TheMovieTracker.repository.MovieRepository;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +20,8 @@ public class MovieService {
         return this.movieRepository.findAll();
     }
 
-    public Optional<Movie> getMovieById(int id) {
-        Optional<Movie> optMovie = this.movieRepository.getMovieById(id);
+    public Optional<Movie> getMovieById(Movie id) {
+        Optional<Movie> optMovie = this.movieRepository.getMovieById(id.getVoteCount());
         if (optMovie.isEmpty()) {
             throw new IllegalArgumentException("Movie not found.");
         }
@@ -39,6 +38,17 @@ public class MovieService {
                 movie.setStatus(true);
                 movieRepository.save(movie);
             }
+        }
+    }
+
+    public void bookSeats(Movie movie, int numberOfSeats) {
+        int availableSeats = movie.getAvailableSeats();
+        if (availableSeats >= numberOfSeats) {
+            movie.setAvailableSeats(availableSeats - numberOfSeats);
+            movieRepository.save(movie);
+        } else {
+            // Handle the case where there are not enough available seats
+            throw new IllegalArgumentException("Not enough available seats in the theatre.");
         }
     }
 }

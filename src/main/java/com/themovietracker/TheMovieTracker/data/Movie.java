@@ -17,49 +17,49 @@ import java.util.List;
 @Document(collection = "Movie")
 public class Movie {
     @Id
-//    @Column(name = "_id")
+    @Column(name = "_id")
     private String _id;
 
-//    @Column(name = "adult")
+    @Column(name = "adult")
     private boolean adult;
 
-//    @Column(name = "backdrop_path")
+    @Column(name = "backdrop_path")
     private String backdropPath;
 
-//    @Column(name = "genre_ids")
+    @Column(name = "genre_ids")
     private int[] genreIds;
 
-//    @Column(name = "original_language")
+    @Column(name = "original_language")
     private String originalLanguage;
 
-//    @Column(name = "original_title")
+    @Column(name = "original_title")
     private String originalTitle;
 
-//    @Column(name = "overview")
+    @Column(name = "overview")
     private String overview;
 
-//    @Column(name = "popularity")
+    @Column(name = "popularity")
     private double popularity;
 
-//    @Column(name = "poster_path")
+    @Column(name = "poster_path")
     private String posterPath;
 
-//    @Column(name = "release_date")
+    @Column(name = "release_date")
     private String releaseDate;
 
-//    @Column(name = "title")
+    @Column(name = "title")
     private String title;
 
-//    @Column(name = "video")
+    @Column(name = "video")
     private boolean video;
 
-//    @Column(name = "id")
+    @Column(name = "id")
     private Long id;
 
-//    @Column(name = "vote_average")
+    @Column(name = "vote_average")
     private double voteAverage;
 
-//    @Column(name = "vote_count")
+    @Column(name = "vote_count")
     private int voteCount;
     private boolean status;
 
@@ -205,6 +205,18 @@ public class Movie {
 
     public boolean isStatus() {
         return status;
+    }
+
+    private int totalSeats;
+    private int bookedSeats;
+    private int availableSeats;
+
+    public int getAvailableSeats() {
+        return totalSeats - bookedSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
     }
 
     @DocumentReference

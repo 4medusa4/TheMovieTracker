@@ -33,40 +33,23 @@ public class BookingService {
         return booking1.get();
     }
 
-//    public Booking bookTicket(String userId, String movieId, String theatreId, Booking booking) {
-//        // Validate the existence of user, movie, and theatre
-//        Optional<User> userOptional = userService.getUserById(userId);
-//        Optional<Movie> movieOptional = movieService.getMovieById(movieId);
-//        Optional<Theatre> theatreOptional = theatreService.getTheatreById(theatreId);
-//
-//        if (userOptional.isEmpty() || movieOptional.isEmpty() || theatreOptional.isEmpty()) {
-//            // Handle invalid user, movie, or theatre
-//            throw new IllegalArgumentException("Invalid user, movie, or theatre.");
-//        }
-//
-//        User user = userOptional.get();
-//        Movie movie = movieOptional.get();
-//        Theatre theatre = theatreOptional.get();
-//
-//        // Set booking details
-//        booking.setBookingDate(LocalDate.now());
-//        booking.setUser(user);
-//        booking.setMovie(movie);
-//        booking.setTheatre(theatre);
-//
-//        // Update seat counts in the theatre and movie
-//        theatreService.bookSeats(theatre, booking.getNumberOfSeats());
-//        movieService.bookSeats(movie, booking.getNumberOfSeats());
-//
-//        // Calculate total amount based on seat counts and other factors
-//        long totalAmount = calculateTotalAmount(booking);
-//        booking.setTotalAmount(totalAmount);
-//
-//        // Perform any additional business logic or validation
-//
-//        // Save the booking
-//        return bookingRepository.save(booking);
-//    }
+    public Booking saveBooking(Booking booking) {
+        // Perform any validation or business logic before saving, if needed
+
+        // Set booking details
+        booking.setBookingDate(LocalDate.now());
+        // Example: Calculate total amount based on seat counts and other factors
+        long totalAmount = calculateTotalAmount(booking);
+        booking.setTotalAmount(totalAmount);
+
+        // Example: Update seat counts in the theatre and movie
+        updateSeatCounts(booking);
+
+        // Example: Perform additional business logic or validation
+
+        // Save the booking
+        return bookingRepository.save(booking);
+    }
 
     private long calculateTotalAmount(Booking booking) {
         // Add logic to calculate total amount based on seat counts, pricing, etc.
@@ -75,16 +58,34 @@ public class BookingService {
         return booking.getNumberOfSeats() * pricePerSeat;
     }
 
+    private void updateSeatCounts(Booking booking) {
+        // Example: Update seat counts in the associated theatre and movie
+        // You need to implement these methods in TheatreService and MovieService
+        Optional<Theatre> theatreOptional = theatreService.getTheatreById(String.valueOf(booking.getTheatreIds().get(0)));
+        Optional<Movie> movieOptional = movieService.getMovieById(booking.getMovieIds().get(0));
+
+        if (theatreOptional.isPresent() && movieOptional.isPresent()) {
+            Theatre theatre = theatreOptional.get();
+            Movie movie = movieOptional.get();
+
+            // Update seat counts
+            theatreService.bookSeats(theatre, booking.getNumberOfSeats());
+            movieService.bookSeats(movie, booking.getNumberOfSeats());
+        }
+    }
+
     public Booking updateBooking(Booking booking){
 
         return bookingRepository.save(booking);
     }
 
     public void deleteBookingById(int id){
+
         bookingRepository.deleteById(id);
     }
 
     public Booking createBooking(Booking booking) {
+
         return bookingRepository.save(booking);
     }
 }

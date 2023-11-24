@@ -31,12 +31,6 @@ public class Booking {
     private long totalAmount;
     private boolean isPaid;
 
-    @DocumentReference
-    private List<Movie> movieIds;
-    @DocumentReference
-    private List<Theatre> theatreIds;
-    @DocumentReference
-    private List<User> userIds;
 
     public int getId() {
         return id;
@@ -102,27 +96,10 @@ public class Booking {
         isPaid = paid;
     }
 
-    public List<Movie> getMovieIds() {
-        return movieIds;
-    }
-
-    public void setMovieIds(List<Movie> movieIds) {
-        this.movieIds = movieIds;
-    }
-
-    public List<Theatre> getTheatreIds() {
-        return theatreIds;
-    }
-
-    public void setTheatreIds(List<Theatre> theatreIds) {
-        this.theatreIds = theatreIds;
-    }
-
-    public List<User> getUserIds() {
-        return userIds;
-    }
-
-    public void setUserIds(List<User> userIds) {
-        this.userIds = userIds;
-    }
+    @DocumentReference
+    private List<Movie> movieIds;
+    @DocumentReference
+    private List<Theatre> theatreIds;
+    @DocumentReference
+    private List<User> userIds;
 }

@@ -50,6 +50,19 @@ public class Theatre {
         this.no_of_seats = no_of_seats;
     }
 
+    private int totalSeats;
+    private int bookedSeats;
+
+    private int availableSeats;
+
+    public int getAvailableSeats() {
+        return totalSeats - bookedSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
     @DocumentReference
     private List<Booking> bookingIds;
 }
