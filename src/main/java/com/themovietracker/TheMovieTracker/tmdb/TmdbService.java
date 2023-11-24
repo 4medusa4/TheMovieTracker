@@ -1,24 +1,19 @@
-package com.themovietracker.TheMovieTracker.service;
+package com.themovietracker.TheMovieTracker.tmdb;
 
 import com.themovietracker.TheMovieTracker.config.TmdbConfiguration;
 import com.themovietracker.TheMovieTracker.data.MovieParams;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@RequiredArgsConstructor
 public class TmdbService {
 
     private final TmdbConfiguration tmdbConfiguration;
-
     private final RestTemplate restTemplate;
-
-    @Autowired
-    public TmdbService(RestTemplate restTemplate, TmdbConfiguration tmdbConfiguration) {
-        this.restTemplate = restTemplate;
-        this.tmdbConfiguration = tmdbConfiguration;
-    }
+    private String
 
     public String getMovie(long movieId) {
         String url = tmdbConfiguration.getBaseUrl() + "/movie/" + movieId + "?api_key=" + tmdbConfiguration.getKey();
