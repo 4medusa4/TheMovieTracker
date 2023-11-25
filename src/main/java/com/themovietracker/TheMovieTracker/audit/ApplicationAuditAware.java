@@ -24,6 +24,6 @@ public class ApplicationAuditAware implements AuditorAware<Integer> {
         }
 
         User userPrincipal = (User) authentication.getPrincipal();
-        return Optional.of(Math.toIntExact(userPrincipal.getUserid()));
+        return Optional.of(Math.toIntExact(userPrincipal.getId()));
     }
 }

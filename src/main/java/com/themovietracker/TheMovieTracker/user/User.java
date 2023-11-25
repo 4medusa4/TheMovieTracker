@@ -20,9 +20,10 @@ import java.util.List;
 @Document(collection = "User")
 public class User implements UserDetails {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "user_sequence";
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long userid;
+    private long id;
     private String firstname;
     private String lastname;
     private String email;

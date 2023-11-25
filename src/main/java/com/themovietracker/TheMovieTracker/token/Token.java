@@ -16,7 +16,6 @@ import javax.persistence.*;
 @Document(collection = "Token")
 public class Token {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public long tid;
     public String token;
     @Enumerated(EnumType.STRING)
