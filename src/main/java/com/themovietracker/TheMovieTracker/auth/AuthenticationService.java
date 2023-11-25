@@ -35,6 +35,7 @@ public class AuthenticationService {
                 .id(sequenceGenerator.generateSequence(User.SEQUENCE_NAME))
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
+                .phone(request.getPhone())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
