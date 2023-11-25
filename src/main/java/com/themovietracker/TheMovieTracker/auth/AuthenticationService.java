@@ -2,6 +2,7 @@ package com.themovietracker.TheMovieTracker.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.themovietracker.TheMovieTracker.config.JwtService;
+import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
 import com.themovietracker.TheMovieTracker.token.Token;
 import com.themovietracker.TheMovieTracker.token.TokenRepository;
 import com.themovietracker.TheMovieTracker.token.TokenType;
@@ -27,9 +28,11 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final SequenceGeneratorService sequenceGenerator;
 
     public AuthenticationResponse register(@NotNull RegisterRequest request) {
         var user = User.builder()
+                .id(sequenceGenerator.generateSequence(User.SEQUENCE_NAME))
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
@@ -77,7 +80,7 @@ public class AuthenticationService {
     }
 
     private void revokeAllUserTokens(@NotNull User user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getUserid());
+        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;
         validUserTokens.forEach(token -> {
