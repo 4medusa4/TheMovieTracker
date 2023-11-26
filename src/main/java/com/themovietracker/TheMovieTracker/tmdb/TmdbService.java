@@ -92,6 +92,12 @@ public class TmdbService {
         return restTemplate.getForObject(url, String.class);
     }
 
+    public String getMovieTrailer(long id) {    //movie trailer-need to check
+        String url = baseUrl
+                + "/movie/" + id + "/lists?api_key=" + apiKey;
+        return restTemplate.getForObject(url, String.class);
+    }
+
     public String getNewTmdbToken() {
         String url = baseUrl
                 + "/authentication/token/new?api_key=" + apiKey;
