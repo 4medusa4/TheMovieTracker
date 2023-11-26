@@ -30,14 +30,14 @@ public class MovieParams {
     private double voteAverageLte;
     private int voteCountGte;
     private String watchRegion;
-    private List<Integer> withGenres;
+    private String withGenres;
     private String withKeywords;
     private String withNetworks;
     private String withOriginCountry;
     private String withOriginalLanguage;
     private String withWatchMonetizationTypes;
     private String withWatchProviders;
-    private int withReleaseType;
+    private String withReleaseType;
     private int withRuntimeGte;
     private int withRuntimeLte;
 }
