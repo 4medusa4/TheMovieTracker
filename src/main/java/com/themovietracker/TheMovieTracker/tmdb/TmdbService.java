@@ -1,26 +1,28 @@
 package com.themovietracker.TheMovieTracker.tmdb;
 
 import com.themovietracker.TheMovieTracker.data.MovieParams;
+import com.themovietracker.TheMovieTracker.enums.MovieSortType;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class TmdbService {
 
+    private final RestTemplate restTemplate;
     @Value(value = "${application.api.tmdb.base_url}")
     private String baseUrl;
-
     @Value(value = "${application.api.tmdb.key}")
     private String apiKey;
-
     @Value(value = "${application.api.tmdb.image.base_url}")
     private String baseUrlForImages;
-
-    private final RestTemplate restTemplate;
 
     public String getMovie(long movieId) {
         String url = baseUrl + "/movie/" + movieId + "?api_key=" + apiKey;
@@ -28,14 +30,32 @@ public class TmdbService {
     }
 
     public String getMovies(@NotNull MovieParams movieParams) {
-        String url = baseUrl + "/discover/movie?api_key=" + apiKey
-                + "&certification_country=" + movieParams.getCertificationCountry()
-                + "&page=" + movieParams.getPage() + "&show_me=" + movieParams.getShowMe()
-                + "&sort_by=" + movieParams.getSortBy().name().toLowerCase() + ".desc"
-                + "&watch_region=" + movieParams.getWatchRegion()
-                + "&with_original_language=" + movieParams.getWithOriginalLanguage()
-                + "&with_runtime.lte=" + movieParams.getWithRuntimeLte();
-        return restTemplate.getForObject(url, String.class);
+        StringBuilder url = new StringBuilder(baseUrl + "/discover/movie?api_key=" + apiKey);
+        Class<?> clazz = movieParams.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(movieParams);
+                if (value != null && (!(value instanceof String)
+                        || !((String) value).isEmpty()) && (!(value instanceof Number)
+                        || ((Number) value).intValue() != 0)) {
+                    String fieldName = field.getName();
+                    String formattedFieldName = fieldName.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+                    if (value instanceof Date date) {
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        value = format.format(date);
+                    }
+                    if (value instanceof MovieSortType movieSortType) {
+                        value = movieSortType.name().toLowerCase() + ".desc";
+                    }
+                    url.append("&").append(formattedFieldName).append("=").append(value);
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return restTemplate.getForObject(new String(url), String.class);
     }
 
     public String getLanguages() {
