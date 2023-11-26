@@ -94,7 +94,14 @@ public class TmdbService {
 
     public String getMovieTrailer(long id) {    //movie trailer-need to check
         String url = baseUrl
-                + "/movie/" + id + "/lists?api_key=" + apiKey;
+                + "/movie/" + id + "/videos?api_key=" + apiKey;
+        // https://api.themoviedb.org/3/movie/575264/videos
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public String getCredits(long id) {
+        String url = baseUrl
+                + "/movie/" + id + "/credits?api_key=" + apiKey+"&language=en-US";
         return restTemplate.getForObject(url, String.class);
     }
 
