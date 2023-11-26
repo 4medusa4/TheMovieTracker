@@ -3,6 +3,7 @@ package com.themovietracker.TheMovieTracker.tmdb;
 import com.themovietracker.TheMovieTracker.data.MovieParams;
 import com.themovietracker.TheMovieTracker.enums.MovieSortType;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -40,15 +42,15 @@ public class TmdbService {
                 if (value != null && (!(value instanceof String)
                         || !((String) value).isEmpty()) && (!(value instanceof Number)
                         || ((Number) value).intValue() != 0)) {
-                    String fieldName = field.getName();
-                    String formattedFieldName = fieldName.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+
                     if (value instanceof Date date) {
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                         value = format.format(date);
                     }
-                    if (value instanceof MovieSortType movieSortType) {
+                    if (value instanceof MovieSortType movieSortType)
                         value = movieSortType.name().toLowerCase() + ".desc";
-                    }
+
+                    String formattedFieldName = getFormattedFieldName(field);
                     url.append("&").append(formattedFieldName).append("=").append(value);
                 }
             } catch (IllegalAccessException e) {
@@ -56,6 +58,15 @@ public class TmdbService {
             }
         }
         return restTemplate.getForObject(new String(url), String.class);
+    }
+
+    @Contract(pure = true)
+    private @NotNull String getFormattedFieldName(@NotNull Field field) {
+        String fieldName = field.getName();
+        var postfixes = Set.of("Gte", "Lte");
+        for (String postfix : postfixes)
+            fieldName = fieldName.endsWith(postfix) ? fieldName.replaceAll(postfix, "." + postfix.toLowerCase()) : fieldName;
+        return fieldName.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
     }
 
     public String getLanguages() {
