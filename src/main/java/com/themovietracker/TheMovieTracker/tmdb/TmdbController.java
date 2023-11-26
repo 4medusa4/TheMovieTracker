@@ -48,4 +48,9 @@ public class TmdbController {
     public ResponseEntity<String> getNewTmdbToken() {
         return new ResponseEntity<>(this.tmdbService.getNewTmdbToken(), HttpStatus.OK);
     }
+
+    @GetMapping(path = "/movie/{id}/credits", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovieCredits")
+    public ResponseEntity<String> getMovieCredits(@PathVariable(name = "id") long id) {
+        return new ResponseEntity<>(this.tmdbService.getCredits(id), HttpStatus.OK);
+    }
 }
