@@ -10,6 +10,8 @@ import java.util.List;
 
 @Data
 public class MovieParams {
+    private boolean includeAdult;
+    private boolean includeVideo;
     private Date airDateGte;
     private Date airDateLte;
     private String certification;

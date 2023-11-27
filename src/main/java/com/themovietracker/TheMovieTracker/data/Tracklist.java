@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Column;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 @Data
 @AllArgsConstructor
@@ -20,13 +21,27 @@ public class Tracklist {
     private LocalDate currentDate;
     private Time currentTime;
     private LocalDate bookedDate;
-    private String datesOfConvenience;
     private String partOfTheDay;
     private int numberOfSeats;
-    private int numberOfFullSeats;
-    private int numberOfHalfSeats;
-    private String Arrangement;
+    private String arrangement;
     private boolean autoBooking;
+    private int movieId;
+    private int theatreId;
+
+    public String toString() {
+        return "Tracking{" +
+                "id='" + id + '\'' +
+                ", theatreId='" + theatreId + '\'' +
+                ", movieId='" + movieId + '\'' +
+                ", currentDate=" + LocalDate.now() +
+                ", currentTime=" + LocalTime.now() +
+                ", bookedDate=" + bookedDate +
+                ", partOfTheDay='" + partOfTheDay + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", arrangement='" + arrangement + '\'' +
+                ", autoBooking=" + autoBooking +
+                '}';
+    }
 
 
 }
