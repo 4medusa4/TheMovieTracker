@@ -2,14 +2,18 @@ package com.themovietracker.TheMovieTracker.controller;
 
 import com.themovietracker.TheMovieTracker.data.Booking;
 import com.themovietracker.TheMovieTracker.service.BookingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping(path = "/api/v1/tenant")
 public class BookingController {
-    @Autowired
-    private BookingService bookingService;
+    private final BookingService bookingService;
 
     @GetMapping(path = "/bookings")
     public List<Booking> getAllBookings(){
@@ -21,9 +25,9 @@ public class BookingController {
     { return bookingService.getBookingById(id);
     }
 
-    @PostMapping(path="/bookings")
-    public Booking createBooking(@RequestBody Booking booking)
-    { return bookingService.createBooking(booking);
+    @PostMapping(path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE, name = "createBooking")
+    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+        return new ResponseEntity<>(this.bookingService.saveBooking(booking), HttpStatus.OK);
     }
 
     @PutMapping(path="/bookings")

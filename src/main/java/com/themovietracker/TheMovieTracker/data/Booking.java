@@ -7,12 +7,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.Transient;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,86 +19,20 @@ import java.util.List;
 @Document(collection = "Booking")
 public class Booking {
 
-
+    @Transient
+    public static final String SEQUENCE_NAME = "booking_sequence";
     @Id
-    private int id;
-    private LocalDate bookingDate;
-    private Time showTime;
-    private int numberOfSeats;
-    private int numberOfFullSeats;
-    private int numberOfHalfSeats;
-    private long totalAmount;
+    private long id;
+    private Date date;
+    private String showTime;
+    private Set<String> seats;
     private boolean isPaid;
+    private String location;
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDate getBookingDate() {
-        return bookingDate;
-    }
-
-    public void setBookingDate(LocalDate bookingDate) {
-        this.bookingDate = bookingDate;
-    }
-
-    public Time getShowTime() {
-        return showTime;
-    }
-
-    public void setShowTime(Time showTime) {
-        this.showTime = showTime;
-    }
-
-    public int getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(int numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
-    }
-
-    public int getNumberOfFullSeats() {
-        return numberOfFullSeats;
-    }
-
-    public void setNumberOfFullSeats(int numberOfFullSeats) {
-        this.numberOfFullSeats = numberOfFullSeats;
-    }
-
-    public int getNumberOfHalfSeats() {
-        return numberOfHalfSeats;
-    }
-
-    public void setNumberOfHalfSeats(int numberOfHalfSeats) {
-        this.numberOfHalfSeats = numberOfHalfSeats;
-    }
-
-    public long getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(long totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public boolean isPaid() {
-        return isPaid;
-    }
-
-    public void setPaid(boolean paid) {
-        isPaid = paid;
-    }
-
-    @DocumentReference
+    @DocumentReference(collection = "Movie")
     private List<Movie> movieIds;
-    @DocumentReference
+    @DocumentReference(collection = "Theatre")
     private List<Theatre> theatreIds;
-    @DocumentReference
+    @DocumentReference(collection = "User")
     private List<User> userIds;
 }
