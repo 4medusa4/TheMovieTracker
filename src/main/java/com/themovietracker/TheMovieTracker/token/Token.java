@@ -15,12 +15,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Document(collection = "Token")
 public class Token {
+    @Transient
+    public static final String SEQUENCE_NAME = "token_sequence";
     @Id
-    public long tid;
-    public String token;
+    private long tid;
+    private String token;
     @Enumerated(EnumType.STRING)
-    public TokenType tokenType = TokenType.BEARER;
-    public boolean revoked;
-    public boolean expired;
-    public User user;
+    private TokenType tokenType = TokenType.BEARER;
+    private boolean revoked;
+    private boolean expired;
+    private User user;
 }
