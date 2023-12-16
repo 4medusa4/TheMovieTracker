@@ -71,6 +71,7 @@ public class AuthenticationService {
 
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
+                .tid(sequenceGenerator.generateSequence(Token.SEQUENCE_NAME))
                 .user(user)
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)

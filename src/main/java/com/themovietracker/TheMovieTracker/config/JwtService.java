@@ -1,10 +1,13 @@
 package com.themovietracker.TheMovieTracker.config;
 
+import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
+import com.themovietracker.TheMovieTracker.token.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +20,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
@@ -25,6 +29,8 @@ public class JwtService {
     private long jwtExpiration;
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
+
+    private final SequenceGeneratorService sequenceGeneratorService;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

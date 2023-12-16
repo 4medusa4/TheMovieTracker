@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import javax.persistence.Column;
-import java.awt.print.Book;
 import java.util.List;
 
 @Data
@@ -191,12 +190,12 @@ public class Movie {
         this.bookingIds = bookingIds;
     }
 
-    public List<Tracklist> getTracklistIds() {
-        return tracklistIds;
+    public List<TrackList> getTrackListIds() {
+        return trackListIds;
     }
 
-    public void setTracklistIds(List<Tracklist> tracklistIds) {
-        this.tracklistIds = tracklistIds;
+    public void setTrackListIds(List<TrackList> trackListIds) {
+        this.trackListIds = trackListIds;
     }
 
     public void setStatus(boolean status) {
@@ -223,7 +222,7 @@ public class Movie {
     private List<Booking> bookingIds;
 
     @DocumentReference
-    private List<Tracklist> tracklistIds;
+    private List<TrackList> trackListIds;
 
 
 }
