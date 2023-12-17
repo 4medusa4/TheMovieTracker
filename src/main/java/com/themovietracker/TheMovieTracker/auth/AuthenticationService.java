@@ -1,11 +1,11 @@
 package com.themovietracker.TheMovieTracker.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.themovietracker.TheMovieTracker.config.JwtService;
-import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
-import com.themovietracker.TheMovieTracker.token.Token;
-import com.themovietracker.TheMovieTracker.token.TokenRepository;
-import com.themovietracker.TheMovieTracker.token.TokenType;
+import com.themovietracker.TheMovieTracker.exceptions.UsernameAlreadyExistsException;
+import com.themovietracker.TheMovieTracker.jwt.JwtService;
+import com.themovietracker.TheMovieTracker.jwt.Token;
+import com.themovietracker.TheMovieTracker.jwt.TokenRepository;
+import com.themovietracker.TheMovieTracker.jwt.TokenType;
 import com.themovietracker.TheMovieTracker.user.User;
 import com.themovietracker.TheMovieTracker.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,11 +29,9 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final SequenceGeneratorService sequenceGenerator;
 
     public AuthenticationResponse register(@NotNull RegisterRequest request) {
         var user = User.builder()
-                .id(sequenceGenerator.generateSequence(User.SEQUENCE_NAME))
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .phone(request.getPhone())
@@ -40,11 +39,19 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
+        Optional<User> _eUser = repository.findByEmail(user.getUsername());
+        if (_eUser.isPresent())
+            throw new UsernameAlreadyExistsException(user.getUsername());
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
+        return AuthenticationResponse
+                .builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -71,7 +78,6 @@ public class AuthenticationService {
 
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
-                .tid(sequenceGenerator.generateSequence(Token.SEQUENCE_NAME))
                 .user(user)
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)

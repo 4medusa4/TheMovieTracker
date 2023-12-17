@@ -3,14 +3,16 @@ package com.themovietracker.TheMovieTracker.auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RestController
-@RequestMapping(path = "/api/v1/auth")
+@RequestMapping(path = "/api/v1/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@CrossOrigin
 public class AuthenticationController {
 
     private final AuthenticationService service;
@@ -29,7 +31,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
-    @PostMapping("/refresh-token")
+    @PostMapping("/refresh-jwt")
     public void refreshToken(
             HttpServletRequest request,
             HttpServletResponse response

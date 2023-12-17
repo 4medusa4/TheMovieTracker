@@ -1,6 +1,6 @@
 package com.themovietracker.TheMovieTracker.user;
 
-import com.themovietracker.TheMovieTracker.token.Token;
+import com.themovietracker.TheMovieTracker.jwt.Token;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,7 +24,7 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Transient
-    public static final String SEQUENCE_NAME = "user_sequence";
+    public static final String SEQUENCE_NAME = User.class.getName().toUpperCase();
     @Id
     private long id;
     private String firstname;
@@ -32,39 +35,18 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     private List<Token> tokens;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role.getAuthorities();
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
+        return this.role.getAuthorities();
     }
 
     @Override
     public String getUsername() {
         return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

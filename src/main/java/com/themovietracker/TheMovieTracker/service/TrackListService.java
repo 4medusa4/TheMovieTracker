@@ -1,7 +1,6 @@
 package com.themovietracker.TheMovieTracker.service;
 
 import com.themovietracker.TheMovieTracker.data.TrackList;
-import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
 import com.themovietracker.TheMovieTracker.repository.TrackListRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +12,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class TrackListService {
     private final TrackListRepository tracklistRepository;
-    private final SequenceGeneratorService sequenceGeneratorService;
     private final Queue<TrackList> autoBookingQueue = new LinkedList<>();
 
 
@@ -51,7 +49,6 @@ public class TrackListService {
 
 
     public TrackList addToTrackList(@NotNull TrackList tracklist) {
-        tracklist.setId(sequenceGeneratorService.generateSequence(TrackList.SEQUENCE_NAME));
         return tracklistRepository.save(tracklist);
     }
 }

@@ -1,7 +1,5 @@
-package com.themovietracker.TheMovieTracker.config;
+package com.themovietracker.TheMovieTracker.jwt;
 
-import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
-import com.themovietracker.TheMovieTracker.token.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -29,8 +27,6 @@ public class JwtService {
     private long jwtExpiration;
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
-
-    private final SequenceGeneratorService sequenceGeneratorService;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
