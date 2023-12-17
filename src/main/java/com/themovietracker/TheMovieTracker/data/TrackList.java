@@ -16,7 +16,7 @@ import java.util.Date;
 @Document(collection = "TrackList")
 public class TrackList {
     @Transient
-    public static final String SEQUENCE_NAME = "trackList_sequence";
+    public static final String SEQUENCE_NAME = TrackList.class.getName().toUpperCase();
     @Id
     private long id;
     private Date currentDate;

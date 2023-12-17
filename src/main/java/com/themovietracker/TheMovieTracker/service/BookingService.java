@@ -1,7 +1,6 @@
 package com.themovietracker.TheMovieTracker.service;
 
 import com.themovietracker.TheMovieTracker.data.Booking;
-import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
 import com.themovietracker.TheMovieTracker.repository.BookingRepository;
 import com.themovietracker.TheMovieTracker.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ public class BookingService {
     private final MovieService movieService;
     private final TheatreService theatreService;
     private final UserService userService;
-    private final SequenceGeneratorService sequenceGenerator;
 
     public List<Booking> getAllBookings()    //create a method to get movies
     {
@@ -37,7 +35,6 @@ public class BookingService {
         // Perform any validation or business logic before saving, if needed
 
         // Set booking details
-        booking.setId(sequenceGenerator.generateSequence(Booking.SEQUENCE_NAME));
         booking.setDate(new Date(System.currentTimeMillis()));
         // Example: Calculate total amount based on seat counts and other factors
         long totalAmount = calculateTotalAmount(booking);

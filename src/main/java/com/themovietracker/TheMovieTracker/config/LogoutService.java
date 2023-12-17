@@ -1,6 +1,6 @@
 package com.themovietracker.TheMovieTracker.config;
 
-import com.themovietracker.TheMovieTracker.token.TokenRepository;
+import com.themovietracker.TheMovieTracker.jwt.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

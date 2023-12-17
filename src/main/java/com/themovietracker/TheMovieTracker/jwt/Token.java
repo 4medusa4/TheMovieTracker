@@ -1,4 +1,4 @@
-package com.themovietracker.TheMovieTracker.token;
+package com.themovietracker.TheMovieTracker.jwt;
 
 import com.themovietracker.TheMovieTracker.user.User;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class Token {
     @Transient
     public static final String SEQUENCE_NAME = "token_sequence";
     @Id
-    private long tid;
+    private long id;
     private String token;
     @Enumerated(EnumType.STRING)
     private TokenType tokenType = TokenType.BEARER;

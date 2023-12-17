@@ -1,5 +1,6 @@
 package com.themovietracker.TheMovieTracker.config;
 
+import com.themovietracker.TheMovieTracker.jwt.JwtAuthenticationFilter;
 import com.themovietracker.TheMovieTracker.user.Permission;
 import com.themovietracker.TheMovieTracker.user.Role;
 import lombok.RequiredArgsConstructor;
@@ -37,14 +38,15 @@ public class SecurityConfiguration {
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui.html"};
+            "/swagger-ui.html"
+    };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
-        http
+        return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
@@ -61,12 +63,9 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
+                        logout.logoutUrl("/api/v1/user/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-                )
-        ;
-
-        return http.build();
+                ).build();
     }
 }

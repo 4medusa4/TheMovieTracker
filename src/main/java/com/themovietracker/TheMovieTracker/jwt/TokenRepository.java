@@ -1,4 +1,4 @@
-package com.themovietracker.TheMovieTracker.token;
+package com.themovietracker.TheMovieTracker.jwt;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

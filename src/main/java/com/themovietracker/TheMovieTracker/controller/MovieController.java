@@ -40,7 +40,7 @@ public class MovieController {
         return new ResponseEntity<>(this.tmdbService.getRecommendedMovies(id), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/token/new", produces = MediaType.APPLICATION_JSON_VALUE, name = "getNewTmdbToken")
+    @GetMapping(path = "/jwt/new", produces = MediaType.APPLICATION_JSON_VALUE, name = "getNewTmdbToken")
     public ResponseEntity<String> getNewTmdbToken() {
         return new ResponseEntity<>(this.tmdbService.getNewTmdbToken(), HttpStatus.OK);
     }
