@@ -20,7 +20,7 @@ import java.util.Set;
 public class Booking {
 
     @Transient
-    public static final String SEQUENCE_NAME = "booking_sequence";
+    public static final String SEQUENCE_NAME = Booking.class.getName().toUpperCase();
     @Id
     private long id;
     private Date date;
@@ -28,7 +28,7 @@ public class Booking {
     private Set<String> seats;
     private boolean isPaid;
     private String location;
-
+    private long movieId;
     @DocumentReference(collection = "Movie")
     private List<Movie> movieIds;
     @DocumentReference(collection = "Theatre")

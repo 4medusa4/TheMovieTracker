@@ -107,7 +107,7 @@ public class TmdbService {
 
     public String getNewTmdbToken() {
         String url = baseUrl
-                + "/authentication/token/new?api_key=" + apiKey;
+                + "/authentication/jwt/new?api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class);
     }
 
