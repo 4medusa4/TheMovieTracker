@@ -25,7 +25,7 @@ public class BookingController {
     { return bookingService.getBookingById(id);
     }
 
-    @PostMapping(path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE, name = "createBooking")
+    @PostMapping(path = "/booking", produces = MediaType.APPLICATION_JSON_VALUE, name = "createBooking")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
         return new ResponseEntity<>(this.bookingService.saveBooking(booking), HttpStatus.OK);
     }
