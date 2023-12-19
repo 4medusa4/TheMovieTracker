@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.*;
 public class MovieController {
     private final TmdbService tmdbService;
 
-    @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovies")
+    @PostMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovies")
     public ResponseEntity<String> getMovies(@RequestBody MovieParams movieParams) {
         return new ResponseEntity<>(this.tmdbService.getMovies(movieParams), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/movie/{id}", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovieTmdb")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, name = "getMovieTmdb")
     public ResponseEntity<String> getMovieTmdb(@PathVariable(name = "id") long id) {
 
         return new ResponseEntity<>(this.tmdbService.getMovie(id), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/movie/languages", produces = MediaType.APPLICATION_JSON_VALUE, name = "getLanguages")
+    @GetMapping(path = "/languages", produces = MediaType.APPLICATION_JSON_VALUE, name = "getLanguages")
     public ResponseEntity<String> getLanguagesTMDB() {
         return new ResponseEntity<>(this.tmdbService.getLanguages(), HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class MovieController {
         return new ResponseEntity<>(this.tmdbService.getCountries(language), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/movie/{id}/recommend", produces = MediaType.APPLICATION_JSON_VALUE, name = "getRecommendedMovies")
+    @GetMapping(path = "/{id}/recommend", produces = MediaType.APPLICATION_JSON_VALUE, name = "getRecommendedMovies")
     public ResponseEntity<String> getRecommendedMovies(@PathVariable(name = "id") long id) {
         return new ResponseEntity<>(this.tmdbService.getRecommendedMovies(id), HttpStatus.OK);
     }
