@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/v1/tenant")
+@RequestMapping(path = "/api/v1/booking")
 public class BookingController {
     private final BookingService bookingService;
 
@@ -20,22 +20,22 @@ public class BookingController {
         return bookingService.getAllBookings();
     }
 
-    @GetMapping(path="/bookings/{id}")
+    @GetMapping(path="/{id}")
     public  Booking getBookingById(@PathVariable int id)
     { return bookingService.getBookingById(id);
     }
 
-    @PostMapping(path = "/booking", produces = MediaType.APPLICATION_JSON_VALUE, name = "createBooking")
+    @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE, name = "createBooking")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
         return new ResponseEntity<>(this.bookingService.saveBooking(booking), HttpStatus.OK);
     }
 
-    @PutMapping(path="/bookings")
+    @PutMapping(path="/")
     public Booking updateBooking(@RequestBody Booking booking)
     { return bookingService.updateBooking(booking);
     }
 
-    @DeleteMapping(path="/bookings/{id}")
+    @DeleteMapping(path="/{id}")
     public void deleteBookingById(@PathVariable int id)
     { bookingService.deleteBookingById(id);
     }

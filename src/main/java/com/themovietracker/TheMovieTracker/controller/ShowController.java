@@ -13,36 +13,37 @@ import java.sql.Time;
 import java.util.List;
 
 @RestController
+@RequestMapping(path = "api/v1/show")
 public class ShowController {
     @Autowired
     private ShowService showService;
 
-    @GetMapping(path = "/api/v1/shows", produces = MediaType.APPLICATION_JSON_VALUE, name = "getShows")
+    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE, name = "getShows")
     public ResponseEntity<List<Show>> getShows() {
         return new ResponseEntity<>(this.showService.getShows(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/api/v1/show", produces = MediaType.APPLICATION_JSON_VALUE, name = "getShowById", params = "id")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, name = "getShowById", params = "id")
     public ResponseEntity<Show> getShow(@RequestParam int id) {
         return new ResponseEntity<>(this.showService.getShowById(id).stream().iterator().next(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/api/v1/show", produces = MediaType.APPLICATION_JSON_VALUE, name = "getShowByName", params = "name")
+    @GetMapping(path = "/{time}", produces = MediaType.APPLICATION_JSON_VALUE, name = "getShowByName", params = "time")
     public ResponseEntity<Show> getShowByStartTime(@RequestParam Time startTime) {
         return new ResponseEntity<>(this.showService.getShowByStartTime(startTime).stream().iterator().next(), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/api/v1/show", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> saveShow(@RequestBody @NotNull Show show) {
         return new ResponseEntity<>(this.showService.saveShow(show), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/api/v1/shows", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/shows", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Integer>> saveShows(@RequestBody @NotNull List<Show> shows) {
         return new ResponseEntity<>(this.showService.saveShows(shows).stream().map(Show::getId).toList(), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/api/v1/show", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateShow(@RequestBody @NotNull Show show) {
         return new ResponseEntity<>(this.showService.updateShow(show), HttpStatus.OK);
     }

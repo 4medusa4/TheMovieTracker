@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("api/v1/mail")
 public class EmailSendController {
 
     private final EmailService emailService;

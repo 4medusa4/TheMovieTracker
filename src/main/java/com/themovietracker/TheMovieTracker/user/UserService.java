@@ -1,10 +1,11 @@
 package com.themovietracker.TheMovieTracker.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,23 +16,19 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
 
-    public void changePassword(@NonNull ChangePasswordRequest request, Principal connectedUser) {
+    public void changePassword(@NotNull ChangePasswordRequest request, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-
-        //check if the current password is correct
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             throw new IllegalStateException("Wrong password");
         }
-
         //check if the tow new passwords are the same
-        if (!request.getNewPassword().equals(request.getConfirmationPassword())) {
+        if (!request.getNewPassword().equals(request.getConfirmationText())) {
             throw new IllegalStateException("Passwords are not the same");
         }
-
         //update the password
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         repository.save(user);
@@ -52,5 +49,10 @@ public class UserService {
     }
     public void deleteUser(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return repository.findByUsername(username).orElseThrow();
     }
 }

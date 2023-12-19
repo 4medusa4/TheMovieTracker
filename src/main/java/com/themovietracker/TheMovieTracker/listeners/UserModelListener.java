@@ -1,11 +1,14 @@
-package com.themovietracker.TheMovieTracker.user;
+package com.themovietracker.TheMovieTracker.listeners;
 
 import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
+import com.themovietracker.TheMovieTracker.user.User;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class UserModelListener extends AbstractMongoEventListener<User> {
     private final SequenceGeneratorService sequenceGenerator;

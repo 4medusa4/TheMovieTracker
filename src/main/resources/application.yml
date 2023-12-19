@@ -32,4 +32,4 @@ application:
       image:
         base_url: https://image.tmdb.org/t/p/original
 
-debug: false
+debug: true
