@@ -25,6 +25,6 @@ public class TrackList {
     private int numberOfSeats;
     private String arrangement;
     private boolean autoBooking;
-    private int movieId;
+    private long movieId;
     private int theatreId;
 }

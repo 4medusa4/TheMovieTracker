@@ -28,7 +28,7 @@ public class Booking {
     private Set<String> seats;
     private boolean isPaid;
     private String location;
-
+    private long movieId;
     @DocumentReference(collection = "Movie")
     private List<Movie> movieIds;
     @DocumentReference(collection = "Theatre")
