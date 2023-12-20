@@ -1,17 +1,20 @@
 package com.themovietracker.TheMovieTracker.data;
 
-import com.themovietracker.TheMovieTracker.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
-
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+import com.themovietracker.TheMovieTracker.user.User;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

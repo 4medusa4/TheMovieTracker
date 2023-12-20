@@ -1,9 +1,10 @@
 package com.themovietracker.TheMovieTracker.config;
 
-import com.themovietracker.TheMovieTracker.jwt.JwtAuthenticationFilter;
+import static org.springframework.http.HttpMethod.*;
+
+
 import com.themovietracker.TheMovieTracker.user.Permission;
 import com.themovietracker.TheMovieTracker.user.Role;
-import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static org.springframework.http.HttpMethod.*;
+import com.themovietracker.TheMovieTracker.jwt.JwtAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -48,28 +51,28 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers(WHITE_LIST_URL).permitAll()
-                                .requestMatchers("/api/v1/management/**").hasAnyRole(Role.ADMIN.name(), Role.MANAGER.name())
-                                .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(Permission.ADMIN_READ.name(), Permission.MANAGER_READ.name())
-                                .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(Permission.ADMIN_CREATE.name(), Permission.MANAGER_CREATE.name())
-                                .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(Permission.ADMIN_UPDATE.name(), Permission.MANAGER_UPDATE.name())
-                                .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(Permission.ADMIN_DELETE.name(), Permission.MANAGER_DELETE.name())
-                                .anyRequest()
-                                .authenticated())
-                .sessionManagement(sessionConfig ->
-                        sessionConfig
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(request -> request.requestMatchers(WHITE_LIST_URL).permitAll()
+                        .requestMatchers("/api/v1/management/**").hasAnyRole(Role.ADMIN.name(), Role.MANAGER.name())
+                        .requestMatchers(GET, "/api/v1/management/**")
+                        .hasAnyAuthority(Permission.ADMIN_READ.name(), Permission.MANAGER_READ.name())
+                        .requestMatchers(POST, "/api/v1/management/**")
+                        .hasAnyAuthority(Permission.ADMIN_CREATE.name(), Permission.MANAGER_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/management/**")
+                        .hasAnyAuthority(Permission.ADMIN_UPDATE.name(), Permission.MANAGER_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/management/**")
+                        .hasAnyAuthority(Permission.ADMIN_DELETE.name(), Permission.MANAGER_DELETE.name())
+                        .anyRequest()
+                        .authenticated())
+                .sessionManagement(sessionConfig -> sessionConfig
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(
                         jwtAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class
-                ).logout(logoutConfigurer ->
-                        logoutConfigurer.logoutUrl("/api/v1/user/logout")
-                                .addLogoutHandler(logoutHandler)
-                                .logoutSuccessHandler(
-                                        (request, response, authentication) ->
-                                                SecurityContextHolder.clearContext()))
+                        UsernamePasswordAuthenticationFilter.class)
+                .logout(logoutConfigurer -> logoutConfigurer.logoutUrl("/api/v1/user/logout")
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler(
+                                (request, response, authentication) -> SecurityContextHolder.clearContext()))
                 .build();
     }
 }
