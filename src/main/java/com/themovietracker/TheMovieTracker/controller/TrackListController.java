@@ -21,7 +21,7 @@ public class TrackListController {
         return new ResponseEntity<List<TrackList>>(tracklistService.getAllTrackList(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, name = "addToTrackList")
+    @PostMapping(value = "/track", produces = MediaType.APPLICATION_JSON_VALUE, name = "addToTrackList", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TrackList> addToTrackList(@RequestBody TrackList tracklist) {
         return ResponseEntity.ok(tracklistService.addToTrackList(tracklist));
     }
