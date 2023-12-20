@@ -1,68 +1,35 @@
 package com.themovietracker.TheMovieTracker.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import javax.persistence.Transient;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "Theatre")
 public class Theatre {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "SQN_THEATRE";
     @Id
     private String theater_id;
-
     private String theater_name;
-
     private String location;
-
     private int no_of_seats;
-
-    public String getTheater_id() {
-        return theater_id;
-    }
-
-    public void setTheater_id(String theater_id) {
-        this.theater_id = theater_id;
-    }
-
-    public String getTheater_name() {
-        return theater_name;
-    }
-
-    public void setTheater_name(String theater_name) {
-        this.theater_name = theater_name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public int getNo_of_seats() {
-        return no_of_seats;
-    }
-
-    public void setNo_of_seats(int no_of_seats) {
-        this.no_of_seats = no_of_seats;
-    }
-
     private int totalSeats;
     private int bookedSeats;
-
     private int availableSeats;
-
+    @DocumentReference
+    private List<Booking> bookingIds;
     public int getAvailableSeats() {
         return totalSeats - bookedSeats;
     }
 
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
-
-    @DocumentReference
-    private List<Booking> bookingIds;
 }

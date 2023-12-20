@@ -1,6 +1,7 @@
-package com.themovietracker.TheMovieTracker.helpers;
+package com.themovietracker.TheMovieTracker.listeners;
 
-import com.themovietracker.TheMovieTracker.jwt.Token;
+import com.themovietracker.TheMovieTracker.data.Booking;
+import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
@@ -9,13 +10,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TokenModelListener extends AbstractMongoEventListener<Token> {
-
+public class BookingModelListener extends AbstractMongoEventListener<Booking> {
     private final SequenceGeneratorService sequenceGenerator;
 
     @Override
-    public void onBeforeConvert(@NotNull BeforeConvertEvent<Token> event) {
+    public void onBeforeConvert(@NotNull BeforeConvertEvent<Booking> event) {
         if (event.getSource().getId() < 1)
-            event.getSource().setId(sequenceGenerator.generateSequence(Token.SEQUENCE_NAME));
+            event.getSource().setId(sequenceGenerator.generateSequence(Booking.SEQUENCE_NAME));
     }
 }

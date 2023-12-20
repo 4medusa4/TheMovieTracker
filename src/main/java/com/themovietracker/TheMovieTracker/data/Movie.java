@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import javax.persistence.Column;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Data
@@ -15,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "Movie")
 public class Movie {
+    @Transient
+    public static final String SEQUENCE_NAME = "SQN_MOVIE";
     @Id
     @Column(name = "_id")
     private String _id;

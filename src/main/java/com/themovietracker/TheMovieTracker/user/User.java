@@ -1,11 +1,10 @@
 package com.themovietracker.TheMovieTracker.user;
 
-import java.beans.Transient;
 import java.util.Collection;
 
-import javax.management.relation.Role;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;

@@ -41,17 +41,11 @@ public class MovieShedulerService {
                 Booking booking = createBookingFromTrackList(trackList);
                 Booking savedBooking = bookingRepository.save(booking);
 
-                if (savedBooking != null) {
-                    // The save operation was successful
-                    // You can perform additional actions or log a success message
-                    System.out.println("Booking saved successfully: " + savedBooking.getId());
-                    MultipartFile[] file = {};
-                    emailService.sendMail(file, "imeshalakshani007@gmail.com", new String[] {"warunamadushanka456@gmail.com"}, "Test", "Test mail");
-                } else {
-                    // The save operation failed
-                    // You can handle the failure, log an error message, or perform other actions
-                    System.out.println("Failed to save booking");
-                }
+                // The save operation was successful
+                // You can perform additional actions or log a success message
+                System.out.println("Booking saved successfully: " + savedBooking.getId());
+                MultipartFile[] file = {};
+                emailService.sendMail(file, "imeshalakshani007@gmail.com", new String[] {"warunamadushanka456@gmail.com"}, "Test", "Test mail");
             }
         }
     }

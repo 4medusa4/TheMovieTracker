@@ -1,6 +1,6 @@
 package com.themovietracker.TheMovieTracker.data;
 
-import com.mongodb.internal.connection.Time;
+import com.themovietracker.TheMovieTracker.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.Set;
 public class Booking {
 
     @Transient
-    public static final String SEQUENCE_NAME = Booking.class.getName().toUpperCase();
+    public static final String SEQUENCE_NAME = "SQN_BOOKING";
     @Id
     private long id;
     private Date date;

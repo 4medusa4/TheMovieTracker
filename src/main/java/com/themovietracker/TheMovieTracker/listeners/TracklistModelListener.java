@@ -1,6 +1,7 @@
-package com.themovietracker.TheMovieTracker.helpers;
+package com.themovietracker.TheMovieTracker.listeners;
 
 import com.themovietracker.TheMovieTracker.data.TrackList;
+import com.themovietracker.TheMovieTracker.helpers.SequenceGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
