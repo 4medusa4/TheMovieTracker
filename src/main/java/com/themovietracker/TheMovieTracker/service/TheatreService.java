@@ -37,7 +37,7 @@ public class TheatreService {
     }
 
     public Optional<Theatre> getTheatreById(String theatreId) {
-        return null;
+        return Optional.empty();
     }
 
     public void bookSeats(Theatre theatre, int numberOfSeats) {

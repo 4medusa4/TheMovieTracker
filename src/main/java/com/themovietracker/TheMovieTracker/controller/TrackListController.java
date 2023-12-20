@@ -13,15 +13,15 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/track-list")
 public class TrackListController {
     private final TrackListService tracklistService;
-    @GetMapping("/track-list")
+    @GetMapping("/all")
     public ResponseEntity<List<TrackList>> getAllTrackList(){
         return new ResponseEntity<List<TrackList>>(tracklistService.getAllTrackList(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/track-list", produces = MediaType.APPLICATION_JSON_VALUE, name = "addToTrackList")
+    @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, name = "addToTrackList")
     public ResponseEntity<TrackList> addToTrackList(@RequestBody TrackList tracklist) {
         return ResponseEntity.ok(tracklistService.addToTrackList(tracklist));
     }

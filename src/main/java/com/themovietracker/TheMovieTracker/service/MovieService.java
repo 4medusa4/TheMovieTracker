@@ -34,7 +34,7 @@ public class MovieService {
 
         for (Movie movie : movies){
             LocalDate releaseDate = LocalDate.parse(movie.getReleaseDate());
-            if(releaseDate !=  null && releaseDate.minusDays(3).equals(today)){
+            if(releaseDate.minusDays(3).equals(today)){
                 movie.setStatus(true);
                 movieRepository.save(movie);
             }

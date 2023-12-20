@@ -1,6 +1,5 @@
 package com.themovietracker.TheMovieTracker.user;
 
-import com.themovietracker.TheMovieTracker.jwt.Token;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,30 +10,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "User")
 public class User implements UserDetails {
 
     @Transient
-    public static final String SEQUENCE_NAME = User.class.getName().toUpperCase();
-    @Id
+    public static final String SEQUENCE_NAME = "SQN_USER";
     private long id;
     private String firstname;
     private String lastname;
-    private String phone;
-    private String email;
+    private String username;
     private String password;
+    private String phone;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private List<Token> tokens;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -43,10 +38,5 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.role.getAuthorities();
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
     }
 }

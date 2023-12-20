@@ -1,6 +1,5 @@
 package com.themovietracker.TheMovieTracker.data;
 
-import com.mongodb.internal.connection.Time;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.Date;
 @Document(collection = "TrackList")
 public class TrackList {
     @Transient
-    public static final String SEQUENCE_NAME = TrackList.class.getName().toUpperCase();
+    public static final String SEQUENCE_NAME = "SQN_TRACKLIST";
     @Id
     private long id;
     private Date currentDate;

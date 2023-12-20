@@ -5,9 +5,11 @@ import com.themovietracker.TheMovieTracker.service.TheatreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping(path = "api/v1/theatre")
 public class TheatreController {
 
     @Autowired
@@ -18,22 +20,22 @@ public class TheatreController {
         return theatreService.getAllTheaters();
     }
 
-    @GetMapping(path = "/theaters/{id}")
+    @GetMapping(path = "/{id}")
     public Theatre getTheaterByID(@PathVariable String id) {
         return theatreService.getTheaterByID(id);
     }
 
-    @PostMapping(path = "/theaters")
+    @PostMapping(path = "/")
     public Theatre createTheater(@RequestBody Theatre theatre) {
         return theatreService.createTheater(theatre);
     }
 
-    @PutMapping(path = "/theaters/{id}")
+    @PutMapping(path = "/{id}")
     public Theatre updateTheater(@RequestBody Theatre theatre) {
         return theatreService.updateTheater(theatre);
     }
 
-    @DeleteMapping(path = "theaters/{id}")
+    @DeleteMapping(path = "/{id}")
     public void deleteTheater(@PathVariable String id) {
         theatreService.deleteTheater(id);
     }
